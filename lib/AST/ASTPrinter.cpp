@@ -3744,6 +3744,13 @@ suppressingFeatureAddressableTypes(PrintOptions &options,
 }
 
 static void
+suppressingFeatureBackDeployFrozenValueTypes(
+    PrintOptions &options, llvm::function_ref<void()> action) {
+  ExcludeAttrRAII scope(options.ExcludeAttrList, DeclAttrKind::BackDeployed);
+  action();
+}
+
+static void
 suppressingFeatureNonexhaustiveAttribute(PrintOptions &options,
                                          llvm::function_ref<void()> action) {
   ExcludeAttrRAII scope(options.ExcludeAttrList, DeclAttrKind::Nonexhaustive);
